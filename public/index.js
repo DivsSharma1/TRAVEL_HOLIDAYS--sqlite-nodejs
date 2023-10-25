@@ -1,11 +1,12 @@
 const getTours = async () => {
-  const data = await axios.get('/tours');
+  const data = await axios.get("/tours");
   console.log(data.data.tours);
   renderCards(data.data.tours);
 };
 
+// Funtionality For Deleting
 const deleteTour = async (tourId) => {
-  const userConfirmed = confirm('Are you sure you want to delete this tour?');
+  const userConfirmed = confirm("Are you sure you want to delete this tour?");
 
   if (userConfirmed) {
     try {
@@ -18,11 +19,11 @@ const deleteTour = async (tourId) => {
 };
 
 const renderCards = (cardDataFromBackend) => {
-  const cardContainer = document.getElementById('cardContainer');
+  const cardContainer = document.getElementById("cardContainer");
 
   cardDataFromBackend.forEach((data) => {
-    const card = document.createElement('div');
-    card.classList.add('card');
+    const card = document.createElement("div");
+    card.classList.add("card");
     card.innerHTML = `
     <div class="card__header">
         <div class="card__picture">
@@ -139,17 +140,18 @@ const renderCards = (cardDataFromBackend) => {
               <a class="btn btn--green btn--small" href="#">DETAILS</a>
             </div>`;
 
-    const deleteIcon = card.querySelector('.delete-icon');
-    deleteIcon.addEventListener('click', () => {
-      const tourId = deleteIcon.getAttribute('data-tour-id');
+    const deleteIcon = card.querySelector(".delete-icon");
+    deleteIcon.addEventListener("click", () => {
+      const tourId = deleteIcon.getAttribute("data-tour-id");
       deleteTour(tourId);
       card.remove();
+      location.reload();
     });
 
     cardContainer.appendChild(card);
   });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   getTours();
 });
